@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowEndScreenUI(bool status) {
         // Show the game over UI elements
-        if (endGamePanel != null && endScreenMessage != null) {
+        if (endGamePanel != null && endGameMessage != null) {
             endGamePanel.SetActive(true);
             if (status) {
                         // Show game win UI
