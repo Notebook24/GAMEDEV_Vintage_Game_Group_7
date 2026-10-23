@@ -87,25 +87,25 @@ public class LevelGenerator : MonoBehaviour
                         break;
 
                     case 4: // Red
-                        spawnedObj = Instantiate(redGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        spawnedObj = Instantiate(redGhostPrefab, basePos + new Vector3(0, 2.4f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
                         
                     case 5: // green
-                        spawnedObj = Instantiate(greenGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        spawnedObj = Instantiate(greenGhostPrefab, basePos + new Vector3(0, 2.4f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
 
                     case 6: // pink
-                        spawnedObj = Instantiate(pinkGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        spawnedObj = Instantiate(pinkGhostPrefab, basePos + new Vector3(0, 2.4f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
 
                     case 7: // orange
-                        spawnedObj = Instantiate(orangeGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        spawnedObj = Instantiate(orangeGhostPrefab, basePos + new Vector3(0, 2.4f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
