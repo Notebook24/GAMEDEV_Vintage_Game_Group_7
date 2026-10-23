@@ -25,7 +25,7 @@ public class GameManager: MonoBehaviour {
         // totalDots = <to be inserted>
         isGameActive = true;
 
-        //UIManager.Instance.UpdateScore(currentScore);
+        UIManager.Instance.UpdateScore(currentScore);
     }
 
     public void AddScore(int pts) {
@@ -37,6 +37,7 @@ public class GameManager: MonoBehaviour {
         dotsCollected++;
 
         //Update the UI with the new score
+        UIManager.Instance.UpdateScore(currentScore);
 
         // Check for win condition which is when dots are all collected
         if (dotsCollected >= totalDots) {
@@ -48,19 +49,23 @@ public class GameManager: MonoBehaviour {
         // Handle game over logic
         if (!isGameActive)
             return;
-
-        //Show UI for game over horror
-
+        //Set the game state to inactive
+        isGameActive = false;
+        //Show UI for game over
+        UIManager.Instance.ShowEndScreenUI(false);
         //Stop the gameplay
+        //to be inserted
     }
 
     public void GameWon() {
         // Handle game won logic
         if (!isGameActive)
             return;
-
+        //Set the game state to inactive
+        isGameActive = false;
         //Show UI for winning the game
-
+        UIManager.Instance.ShowEndScreenUI(true);
         //Stop the gameplay
+        //to be inserted
     }
 }
