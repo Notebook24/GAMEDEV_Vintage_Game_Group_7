@@ -5,12 +5,16 @@ public class LevelGenerator : MonoBehaviour
     // prefabs
     public GameObject wallPrefab;
     public GameObject dotPrefab;
-    public GameObject ghostPrefab;
+    public GameObject redGhostPrefab;
+    public GameObject greenGhostPrefab;
+    public GameObject pinkGhostPrefab;
+    public GameObject orangeGhostPrefab;
     public GameObject playerPrefab;
 
     public float tileSize = 2.5f;
 
-    // 0 empty 1 wall 2 dot 3 ghost 4 player
+    // 0 empty 1 wall 2 dot 3 player
+    // ghosts - 4 red 5 green 6 pink 7 orange
     // inspiration from sokobot map generation
     private int[,] mazeGrid = new int[,] // 28 x 28
     {
@@ -27,8 +31,8 @@ public class LevelGenerator : MonoBehaviour
         {1, 0,0,0,0,1,  2,  1,0,0,0,0,0, 0 ,0,0,0,0,0,1,    2,    1,0,0,0,0,    1},
 
         {1, 0,0,0,0,1,  2,  1,0,0,0,0,0, 0 ,0,0,0,0,0,1,    2,    1,0,0,0,0,    1}, 
-        {1, 0,0,0,0,1,  2,  1,0,0,1,1,0, 3 ,0,1,1,0,0,1,    2,    1,0,0,0,0,    1}, 
-        {1, 0,0,0,0,1,  2,  0,0,0,1,0,3, 3 ,3,0,1,0,0,0,    2,    1,0,0,0,0,    1},//middle of the map removed gaps
+        {1, 0,0,0,0,1,  2,  1,0,0,1,1,0, 4 ,0,1,1,0,0,1,    2,    1,0,0,0,0,    1}, 
+        {1, 0,0,0,0,1,  2,  0,0,0,1,0,5, 6 ,7,0,1,0,0,0,    2,    1,0,0,0,0,    1},//middle of the map removed gaps
         {1, 0,0,0,0,1,  2,  1,0,0,1,1,1, 1 ,1,1,1,0,0,1,    2,    1,0,0,0,0,    1},
         {1, 0,0,0,0,1,  2,  1,0,0,0,0,0, 0 ,0,0,0,0,0,1,    2,    1,0,0,0,0,    1},
 
@@ -38,12 +42,12 @@ public class LevelGenerator : MonoBehaviour
         {1, 2,2,2,2,2,  2,  2,2,2,2,2,2, 1 ,2,2,2,2,2,2,    2,    2,2,2,2,2,    1},
         {1, 2,1,1,1,1,  2,  1,1,1,1,1,2, 1 ,2,1,1,1,1,1,    2,    1,1,1,1,2,    1},
 
-        {1, 2,2,2,1,1,  2,  2,2,2,2,2,2, 4 ,2,2,2,2,2,2,    2,    1,1,2,2,2,    1},
+        {1, 2,2,2,1,1,  2,  2,2,2,2,2,2, 3 ,2,2,2,2,2,2,    2,    1,1,2,2,2,    1},
         {1, 1,1,2,1,1,  2,  1,1,2,1,1,1, 1 ,1,1,1,2,1,1,    2,    1,1,2,1,1,    1},
         {1, 2,2,2,2,2,  2,  1,1,2,2,2,2, 1 ,2,2,2,2,1,1,    2,    2,2,2,2,2,    1},
         {1, 2,1,1,1,1,  1,  1,1,1,1,1,2, 1 ,2,1,1,1,1,1,    1,    1,1,1,1,2,    1},
         {1, 2,1,1,1,1,  1,  1,1,1,1,1,2, 1 ,2,1,1,1,1,1,    1,    1,1,1,1,2,    1},
-        
+
         {1, 2,2,2,2,2,  2,  2,2,2,2,2,2, 1 ,2,2,2,2,2,2,    2,    2,2,2,2,2,    1},
         {1, 1,1,1,1,1,  1,  1,1,1,1,1,1, 1 ,1,1,1,1,1,1,    1,    1,1,1,1,1,    1}
     };
@@ -76,17 +80,36 @@ public class LevelGenerator : MonoBehaviour
                         // spawnedObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                         break;
                     
-                    case 3: // Ghost
-                        spawnedObj = Instantiate(ghostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
-                        // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
-                        // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-                        break;
-                    
-                    case 4: // Player
+                    case 3: // Player
                         spawnedObj = Instantiate(playerPrefab, basePos + new Vector3(0, 0.75f, 0), Quaternion.identity);
                         // Unity capsules are 2m default. Scaling Y by 0.75 makes it 1.5m tall
                         // spawnedObj.transform.localScale = new Vector3(1.0f, 0.75f, 1.0f);
                         break;
+
+                    case 4: // Red
+                        spawnedObj = Instantiate(redGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
+                        // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                        break;
+                        
+                    case 5: // green
+                        spawnedObj = Instantiate(greenGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
+                        // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                        break;
+
+                    case 6: // pink
+                        spawnedObj = Instantiate(pinkGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
+                        // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                        break;
+
+                    case 7: // orange
+                        spawnedObj = Instantiate(orangeGhostPrefab, basePos + new Vector3(0, 1.2f, 0), Quaternion.identity);
+                        // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
+                        // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                        break;
+                    
                 }
             }
         }

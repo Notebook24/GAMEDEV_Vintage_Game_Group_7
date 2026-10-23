@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9143834722647731184}
   - component: {fileID: 8616590805831580231}
   m_Layer: 0
-  m_Name: Ghost
+  m_Name: Red_Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 699155d0279feb448bd167c35045c93f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
