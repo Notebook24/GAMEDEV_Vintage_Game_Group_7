@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 /** TODO:
  * 3. ADD EVENT FOR STARTING CHASE SEQUENCE
- * 4. ADD OnStateChanged(State old, State new) EVENT FOR AUDIO/MUSIC (fire from switchState)
  * 6. ADD RESET METHOD (aggression, startleCounter, freeze flags, light, state, spawn position)
  */
 [System.Serializable]
@@ -120,6 +119,14 @@ public class GhostAI : MonoBehaviour
         }
     }
 
+    public State getCurrentState() {
+        return currentState;
+    }
+
+    public bool isMoving() {
+        return agent.velocity.sqrMagnitude > 0.01f;
+    }
+
     private void RunningAway() {
         if (JustEnteredState()) {
             changeSpeed(runningAwaySpeed);
@@ -166,7 +173,8 @@ public class GhostAI : MonoBehaviour
         }
         duration += durationRandomizer;
 
-        if (timeSinceLastState() >= duration)
+        bool tooClose = distanceFromPlayer() <= NonAggressiveStalkDistance * 0.5f;
+        if (timeSinceLastState() >= duration || tooClose)
             switchState(State.AggresiveStalking);
     }
 
@@ -233,7 +241,7 @@ public class GhostAI : MonoBehaviour
 
     //HELPERS
     private bool isPathfindTime() {
-        if (Time.time - lastPathfind < timeBetweenPathFinding)
+        if (Time.time - lastPathfind < timeBetweenPathFinding && !JustEnteredState())
             return false;
 
         lastPathfind = Time.time;
@@ -273,8 +281,9 @@ public class GhostAI : MonoBehaviour
     }
 
     private void checkForJumpscare() {
-        if (distanceFromPlayer() > 0.75) return;
+        if (distanceFromPlayer() > 1) return;
 
+        Debug.Log("PLAYER CAUGHT!");
         onPlayerCaught.Invoke();
     }
 

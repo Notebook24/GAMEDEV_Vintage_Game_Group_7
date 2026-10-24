@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-5998274008730590679
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_9_{-5998274008730590679}
+  m_AudioClip: {fileID: 8300000, guid: b1e353af9faa34847b161c12a7b82bca, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-4190053747889065466
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_1_{-4190053747889065466}
+  m_AudioClip: {fileID: 8300000, guid: a6e184681fc39c04d81017b1ea47ac02, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-2246138551053667731
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_19_{-2246138551053667731}
+  m_AudioClip: {fileID: 8300000, guid: b08d1e39a8c3499418a9e111e95ed0ce, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &1514471264659263025
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_7_{1514471264659263025}
+  m_AudioClip: {fileID: 8300000, guid: 5ee791fed51711c4f9a417d1c19b626d, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &5267086029278221181
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_16_{5267086029278221181}
+  m_AudioClip: {fileID: 8300000, guid: 8ed2fd5111179694282b20b3a548a4c8, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footsteps
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0.16
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: 0, y: 0}
+  m_PitchRandomizationRange: {x: -100, y: 100}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: 1514471264659263025}
+  - {fileID: 7745589765667194455}
+  - {fileID: -5998274008730590679}
+  - {fileID: 8351892028534695709}
+  - {fileID: -2246138551053667731}
+  - {fileID: 5267086029278221181}
+  - {fileID: -4190053747889065466}
+  m_AvoidRepeatingLast: 0
+  m_PlaybackMode: 1
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 0
+  m_LoopMode: 0
+  m_VolumeRandomizationEnabled: 0
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 1
+  m_LoopCountRandomizationEnabled: 0
+--- !u!1233149941 &7745589765667194455
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_8_{7745589765667194455}
+  m_AudioClip: {fileID: 8300000, guid: ac5dd13766fcf5b448683c87b2711f39, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &8351892028534695709
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Footstep_Wood_10_{8351892028534695709}
+  m_AudioClip: {fileID: 8300000, guid: 4e53a6ab44bfdd34791eccff8a48305d, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
