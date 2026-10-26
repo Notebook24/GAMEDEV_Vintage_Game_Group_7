@@ -58,6 +58,9 @@ public class GhostAI : MonoBehaviour
     private float durationRandomizer = 0;
     private List<Vector3> playerTrail = new List<Vector3>();
 
+    // Expose aggression level for UI reading
+    public Aggression CurrentAggression => aggressionLevel;
+
     public enum State
     {
         RunningAway, //Staying as far from the player as possible
@@ -67,21 +70,24 @@ public class GhostAI : MonoBehaviour
         Chasing, //When aggressed
     }
 
-    public enum Aggression {
+    public enum Aggression
+    {
         Passive,
         Low,
         High,
         Max
     }
 
-    public void increaseAggression() {
+    public void increaseAggression()
+    {
         if (aggressionLevel == Aggression.Max) return;
 
         aggressionLevel += 1;
         Debug.Log("Aggression level: " + aggressionLevel);
     }
 
-    public void setAggression(Aggression level) {
+    public void setAggression(Aggression level)
+    {
         if (aggressionLevel == level) return;
 
         aggressionLevel = level;
@@ -184,7 +190,7 @@ public class GhostAI : MonoBehaviour
 
 
         float duration = 0;
-        if (aggressionLevel == Aggression.Passive) 
+        if (aggressionLevel == Aggression.Passive)
         {
             return;
         }
@@ -296,16 +302,40 @@ public class GhostAI : MonoBehaviour
         return playerTrail[trail];
     }
 
-    private void scaleAggression() {
+    private void scaleAggression()
+    {
         float dotsPct = GameManager.Instance.DotsCollectedPercentage();
-        if (dotsPct >= 0.9) {
+        if (dotsPct >= 0.9)
+        {
             setAggression(Aggression.Max);
-        } else if (dotsPct >= 0.5) {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateAggressionUI(aggressionLevel.ToString());
+            }
+        }
+        else if (dotsPct >= 0.5)
+        {
             setAggression(Aggression.High);
-        } else if (dotsPct >= 0.07) {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateAggressionUI(aggressionLevel.ToString());
+            }
+        }
+        else if (dotsPct >= 0.07)
+        {
             setAggression(Aggression.Low);
-        } else {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateAggressionUI(aggressionLevel.ToString());
+            }
+        }
+        else
+        {
             setAggression(Aggression.Passive);
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.UpdateAggressionUI(aggressionLevel.ToString());
+            }
         }
     }
 
@@ -316,17 +346,20 @@ public class GhostAI : MonoBehaviour
         new Vector3(62.5f, 0, 62.5f),
     };
 
-    private void FleeToFarthestCorner() {
+    private void FleeToFarthestCorner()
+    {
         Vector3 best = corners[0];
         float bestDist = -10000000f;
-        foreach (Vector3 corner in corners) {
+        foreach (Vector3 corner in corners)
+        {
             float playerDistance = Vector3.Distance(corner, playerTransform.position);
             float ghostDistance = Vector3.Distance(corner, transform.position);
-            playerDistance = (ghostDistance > playerDistance) ? 
+            playerDistance = (ghostDistance > playerDistance) ?
                 playerDistance - 1000 :
                 playerDistance;
 
-            if (playerDistance > bestDist) {
+            if (playerDistance > bestDist)
+            {
                 bestDist = playerDistance;
                 best = corner;
             }

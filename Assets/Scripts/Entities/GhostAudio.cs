@@ -15,18 +15,32 @@ public class GhostAudio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ai.isMoving()) {
+        if (GameManager.Instance != null && !GameManager.Instance.isGameActive)
+        {
+            if (footstep != null && footstep.isPlaying)
+            {
+                footstep.Stop();
+            }
+            return;
+        }
+
+        if (!ai.isMoving())
+        {
             if (footstep.isPlaying) footstep.Pause();
             return;
-        } else {
+        }
+        else
+        {
             if (!footstep.isPlaying) footstep.Play();
         }
 
-        if (ai.getCurrentState() == GhostAI.State.NonAggressiveStalking) {
+        if (ai.getCurrentState() == GhostAI.State.NonAggressiveStalking)
+        {
             footstep.volume = 0.2f;
             footstep.pitch = 0.5f;
         }
-        else {
+        else
+        {
             footstep.volume = 1;
             footstep.pitch = 1;
         }

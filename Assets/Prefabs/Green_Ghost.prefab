@@ -414,7 +414,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6654233035178424688}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8febbd56d869047f3ab254de41ead9c1, type: 3}
   m_Name: 
@@ -426,8 +426,8 @@ MonoBehaviour:
   runningAwaySpeed: 20
   runningAwayDistance: 40
   chaseStartedWarning: 3
-  chasingSpeed: 10
-  runAwayBaseDuration: 25
+  chasingSpeed: 8
+  runAwayBaseDuration: 15
   maxNonAggresiveTime: 15
   playerTrailGap: 2.5
   nonAggressiveFollowGap: 5
