@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UIManager : MonoBehaviour {
     public static UIManager Instance { get; private set; }
@@ -12,6 +13,10 @@ public class UIManager : MonoBehaviour {
     [Header("End Game Elements")]
     public GameObject endGamePanel; // Reference to the UI Panel for end game screen
     public TextMeshProUGUI endGameMessage; // Reference to the UI Text element for displaying end game message
+
+    [Header("Jumpscare Elements")]
+    public GameObject jumpscareImage;
+    public AudioSource jumpscareSound;
 
     private void Awake() {
         if (Instance == null) {
@@ -26,6 +31,9 @@ public class UIManager : MonoBehaviour {
         // Initialize UI elements
         if (endGamePanel != null) {
             endGamePanel.SetActive(false); // Hide end game panel at the start
+        }
+        if (jumpscareImage != null) {
+            jumpscareImage.SetActive(false);
         }
     }
 
@@ -49,9 +57,27 @@ public class UIManager : MonoBehaviour {
                         endGameMessage.color = Color.white;
                     } else {
                         // Show game over UI
-                        endGameMessage.text = "YOU WERE CAUGHT!";
-                        endGameMessage.color = Color.red; // Change text color to red for game over
+                        StartCoroutine(GameOverSequence());
                     }
+        }
+    }
+
+    private IEnumerator GameOverSequence() {
+        if (jumpscareImage != null && jumpscareSound != null) {
+            jumpscareImage.SetActive(true);
+            jumpscareSound.Play();
+        }
+
+        yield return new WaitForSecondsRealtime(2f);
+
+        if (jumpscareImage != null) {
+            jumpscareImage.SetActive(false);
+        }
+
+        if (endGamePanel != null && endGameMessage != null) {
+            endGamePanel.SetActive(true);
+            endGameMessage.text = "YOU WERE CAUGHT!";
+            endGameMessage.color = Color.red; // Change text color to red for game over
         }
     }
 }
