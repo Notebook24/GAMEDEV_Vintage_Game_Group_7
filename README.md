@@ -15,7 +15,7 @@
 
 ## Description
 
-[GAME NAME HERE] is a 3D first-person horror survival game that reimagines Pac-Man from the inside of the maze. The player wanders a pitch-black maze with nothing but a flashlight, collecting every scattered dot while Ghosts relentlessly hunt them down. There are no weapons and no combat, so survival depends on evasion, spotting Ghosts early with the flashlight beam, and managing a limited sprint stamina bar to sprint away when they get close. Collect all the dots to win, but if a Ghost touches you, it's game over.
+PAC: After Dark is a 3D first-person horror survival game that reimagines Pac-Man from the inside of the maze. The player wanders a pitch-black maze with nothing but a flashlight, collecting every scattered dot while Ghosts relentlessly hunt them down. There are no weapons and no combat, so survival depends on evasion, spotting Ghosts early with the flashlight beam, and managing a limited sprint stamina bar to sprint away when they get close. Collect all the dots to win, but if a Ghost touches you, it's game over.
 
 ## Why We Chose This Combination
 
