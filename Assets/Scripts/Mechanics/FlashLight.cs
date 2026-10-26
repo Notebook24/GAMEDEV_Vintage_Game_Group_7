@@ -23,9 +23,14 @@ public class FlashLight : MonoBehaviour
     private float flashBattery = 100f;
     private AudioSource flashAudio;
 
+    // Add these public getters to FlashLight.cs
+    public float FlashBattery => flashBattery;
+    public float MaxBattery => 100f; // Matches initial flashBattery value
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
+        // UIManager.Instance.UpdateFlashlightBattery(100f, 100f);
         GameObject ghostObj = GameObject.FindWithTag("Ghost");
         if (ghostObj != null)
         {
@@ -33,14 +38,16 @@ public class FlashLight : MonoBehaviour
         }
 
         camera = GetComponentInChildren<Camera>();
-        if (camera == null) {
+        if (camera == null)
+        {
             Debug.LogError("put dis in camera");
             return;
         }
         FOV = camera.fieldOfView;
 
         light = GetComponentInChildren<Light>();
-        if (light == null) {
+        if (light == null)
+        {
             Debug.LogError("NEED LIGHT COMPONENT IN CAMERA");
             return;
         }
@@ -54,7 +61,8 @@ public class FlashLight : MonoBehaviour
     void Update()
     {
         if (!Mouse.current.leftButton.wasPressedThisFrame) return;
-        if (flashBattery <= 0) {
+        if (flashBattery <= 0)
+        {
             Debug.Log("OUT OF BATTERY!");
             return;
         }
@@ -63,13 +71,21 @@ public class FlashLight : MonoBehaviour
         StartCoroutine(flashLight());
         detectMonster();
         flashBattery -= flashDrainBatteryAmount;
+        flashBattery = Mathf.Max(flashBattery, 0f);
+
         flashAudio.PlayOneShot(flashAudio.clip);
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateFlashlightBattery(flashBattery, 100f);
+        }
         Debug.Log("FLASHLIGHT BATTERY: " + flashBattery);
     }
 
 
-    private void detectMonster() {
-        Vector3 ghostPos =  new Vector3(ghost.position.x, 1, ghost.position.z);
+    private void detectMonster()
+    {
+        Vector3 ghostPos = new Vector3(ghost.position.x, 1, ghost.position.z);
 
         if (Vector3.Distance(ghostPos, transform.position) > flashDistance)
             return;
@@ -80,24 +96,27 @@ public class FlashLight : MonoBehaviour
         RaycastHit hit;
         LayerMask layer = LayerMask.GetMask("Default");
 
-        if (Physics.Raycast(transform.position, lineToMonster.normalized, out hit, flashDistance, layer)) {
+        if (Physics.Raycast(transform.position, lineToMonster.normalized, out hit, flashDistance, layer))
+        {
             Debug.DrawLine(transform.position, hit.point, Color.red, 2.0f);
             GhostAI ghostAI = hit.collider.transform.root.GetComponent<GhostAI>();
             if (ghostAI == null) return;
-            
+
 
             Debug.Log("GHOST DETECTED");
             ghostAI.Startle();
         }
     }
 
-    private IEnumerator flashLight() {
+    private IEnumerator flashLight()
+    {
         light.intensity = flashIntensity;
 
         yield return new WaitForSeconds(flashDuration);
 
         float elapsed = 0;
-        while (elapsed < flashFade) {
+        while (elapsed < flashFade)
+        {
             elapsed += Time.deltaTime;
             light.intensity = Mathf.Lerp(flashIntensity, 0, elapsed / flashDuration);
             yield return null;

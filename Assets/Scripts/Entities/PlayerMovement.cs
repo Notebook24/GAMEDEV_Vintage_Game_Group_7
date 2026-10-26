@@ -46,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
     {
         Look();
         Move();
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateStamina(CurrentStamina, MaxStamina);
+        }
     }
 
     void Look()
