@@ -9,8 +9,6 @@ public class LevelGenerator : MonoBehaviour
     public GameObject dotPrefab;
     public GameObject redGhostPrefab;
     public GameObject greenGhostPrefab;
-    public GameObject pinkGhostPrefab;
-    public GameObject orangeGhostPrefab;
     public GameObject playerPrefab;
 
     public float tileSize = 2.5f;
@@ -62,17 +60,21 @@ public class LevelGenerator : MonoBehaviour
             surface = gameObject.AddComponent<NavMeshSurface>();
         }
 
-        GenerateMaze();
+        GenerateMaze(true);
         surface.BuildNavMesh();
+        GenerateMaze(false);
     }
 
-    void GenerateMaze()
+    void GenerateMaze(bool wallsOnly)
     {
         for (int x = 0; x < mazeGrid.GetLength(0); x++)
         {
             for (int z = 0; z < mazeGrid.GetLength(1); z++)
             {
                 int tileType = mazeGrid[x, z];
+
+                if (wallsOnly && tileType != 1) continue;
+                if (!wallsOnly && tileType == 1) continue;
 
                 Vector3 basePos = new Vector3(x * tileSize, 0, z * tileSize);
                 GameObject spawnedObj;
@@ -108,13 +110,13 @@ public class LevelGenerator : MonoBehaviour
                         break;
 
                     case 6: // pink
-                        spawnedObj = Instantiate(pinkGhostPrefab, basePos + new Vector3(0, 1.25f, 0), Quaternion.identity);
+                        // spawnedObj = Instantiate(pinkGhostPrefab, basePos + new Vector3(0, 1.25f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
 
                     case 7: // orange
-                        spawnedObj = Instantiate(orangeGhostPrefab, basePos + new Vector3(0, 1.25f, 0), Quaternion.identity);
+                        // spawnedObj = Instantiate(orangeGhostPrefab, basePos + new Vector3(0, 1.25f, 0), Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;

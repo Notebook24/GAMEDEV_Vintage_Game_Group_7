@@ -48,8 +48,15 @@ public class GameManager : MonoBehaviour
         // Check for win condition which is when dots are all collected
         if (dotsCollected >= totalDots)
         {
-            GameOver();
+            GameWon();
         }
+    }
+
+    /// <summary>
+    /// Returns a value between 0 - 1 of how many dots collected;
+    /// </summary>
+    public float DotsCollectedPercentage() {
+        return (float)dotsCollected / totalDots;
     }
 
     public void GameOver()
