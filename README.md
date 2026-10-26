@@ -10,7 +10,7 @@
 |------|------|
 | Joramm Dela Torre | SWE 1: Core State & Architecture (GameManager, UI) |
 | Alain Zuriel Marcos | SWE 2: Player Controller & Survival Mechanics |
-| Nykko Vanguardia | SWE 3: AI & Entity Logic (Ghosts) |
+| Nykko Vanguardia | SWE 3: AI Logic (Ghosts) & Camera Flash |
 | Kei Saguin | SWE 4: Level Engineering & Interactions (Maze, Lighting, Dots) |
 
 ## Description
@@ -30,9 +30,9 @@ We combined pac-man's gameplay of collecting dots while ghosts chase you with fi
 | **Left Mouse Button** | Camera Flash |
 | **Left Shift** (hold) | Sprint (drains stamina, increases speed by 1.8x) |
 
-**Stamina:** sprinting drains the stamina bar in the bottom-left corner. It regenerates after a short delay when you stop sprinting. If it hits zero you can't sprint again until it recovers at least 10% of the maximum stamina (stamina is measured from 0 to 100).
-
 **Camera:** your main weapon against the ghosts. Aim towards the ghost and click the left mouse button to flash your light, this will force them to run away. It has a battery and each use drains it, be careful!
+
+**Stamina:** sprinting drains the stamina bar in the bottom-left corner. It regenerates after a short delay when you stop sprinting. If it hits zero you can't sprint again until it recovers at least 10% of the maximum stamina (stamina is measured from 0 to 100).
 
 ## Objective
 
