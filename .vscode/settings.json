@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "vintage_game_g7.slnx"
+    "dotnet.defaultSolution": "GAMEDEV_Vintage_Game_Group_7.slnx"
 }
