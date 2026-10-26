@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FlashLight : MonoBehaviour
 {
     [SerializeField]
-    private Transform ghost;
+    private List<Transform> ghosts;
     [SerializeField]
     private float flashDistance = 30;
     [SerializeField]
@@ -31,10 +32,12 @@ public class FlashLight : MonoBehaviour
     void Start()
     {   
         // UIManager.Instance.UpdateFlashlightBattery(100f, 100f);
-        GameObject ghostObj = GameObject.FindWithTag("Ghost");
-        if (ghostObj != null)
+        GameObject[] ghostObj = GameObject.FindGameObjectsWithTag("Ghost");
+        if (ghostObj.Length != 0)
         {
-            ghost = ghostObj.transform;
+            foreach (GameObject obj in ghostObj) {
+                ghosts.Add(obj.transform);
+            }
         }
 
         camera = GetComponentInChildren<Camera>();
@@ -69,7 +72,8 @@ public class FlashLight : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(flashLight());
-        detectMonster();
+        foreach(Transform ghost in ghosts)
+            detectMonster(ghost);
         flashBattery -= flashDrainBatteryAmount;
         flashBattery = Mathf.Max(flashBattery, 0f);
 
@@ -83,7 +87,7 @@ public class FlashLight : MonoBehaviour
     }
 
 
-    private void detectMonster()
+    private void detectMonster(Transform ghost)
     {
         Vector3 ghostPos = new Vector3(ghost.position.x, 1, ghost.position.z);
 
@@ -128,5 +132,9 @@ public class FlashLight : MonoBehaviour
 
     public void IncreaseBattery(float amount) {
         flashBattery = Mathf.Min(flashBattery + amount, 100f);
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateFlashlightBattery(flashBattery, 100f);
+        }
     }
 }
