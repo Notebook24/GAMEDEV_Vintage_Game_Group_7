@@ -22,28 +22,30 @@ public class GhostAI : MonoBehaviour
     [SerializeField]
     private float runningAwaySpeed = 20;
     [SerializeField]
-    private float runningAwayDistance = 25;
+    private float runningAwayDistance = 40;
     [SerializeField]
     private float chaseStartedWarning = 3;
     [SerializeField]
     private float chasingSpeed = 10f; //MAKE SURE THIS IS FASTER THAN THE PLAYER
     [SerializeField]
-    private float runAwayDurration = 2f;
+    private float runAwayBaseDuration = 25f;
     [SerializeField]
-    private float NonAggressiveStalkingBaseDuration = 25f;
+    private float maxNonAggresiveTime = 15f;
     [SerializeField]
-    private float NonAggressiveStalkDistance = 20f;
+    private float playerTrailGap = 2.5f;
     [SerializeField]
-    private float playerTrailGap = 10f;
+    private float nonAggressiveFollowGap = 5f;
+    [SerializeField]
+    private float nonAggresiveAttackDistance = 10f;
 
     public UnityEvent onPlayerCaught = new UnityEvent();
     public StateChangedEvent onStateChanged = new StateChangedEvent();
 
-    private byte aggressionLevel = 0;
+    private Aggression aggressionLevel = Aggression.Passive;
     private byte startleCounter = 0;
     private NavMeshAgent agent;
     private Light light;
-    private State currentState = State.NonAggressiveStalking;
+    private State currentState = State.RunningAway;
 
     //helpers
     private int stateLifeTime = -1; //how long the state has lived in frames
@@ -65,9 +67,24 @@ public class GhostAI : MonoBehaviour
         Chasing, //When aggressed
     }
 
-    public void increaseAgression()
-    {
+    public enum Aggression {
+        Passive,
+        Low,
+        High,
+        Max
+    }
+
+    public void increaseAggression() {
+        if (aggressionLevel == Aggression.Max) return;
+
         aggressionLevel += 1;
+        Debug.Log("Aggression level: " + aggressionLevel);
+    }
+
+    public void setAggression(Aggression level) {
+        if (aggressionLevel == level) return;
+
+        aggressionLevel = level;
         Debug.Log("Aggression level: " + aggressionLevel);
     }
 
@@ -89,7 +106,7 @@ public class GhostAI : MonoBehaviour
                 GameManager.Instance.GameOver();
             }
         });
-        Debug.Log(light);
+        Debug.Log("GHOST INSTANTIATED");
     }
 
     void Update()
@@ -114,7 +131,7 @@ public class GhostAI : MonoBehaviour
                 Chasing();
                 break;
         }
-
+        scaleAggression();
     }
 
     /// <summary>
@@ -156,22 +173,36 @@ public class GhostAI : MonoBehaviour
     {
         if (JustEnteredState())
         {
+            durationRandomizer = Random.Range(0, 4f);
             changeSpeed(runningAwaySpeed);
         }
 
-        if ((JustEnteredState() || isPathfindTime()) && distanceFromPlayer() <= runningAwayDistance)
+        if (isPathfindTime() && distanceFromPlayer() <= runningAwayDistance)
         {
-            Vector3 lineToPlayer = playerTransform.position - transform.position;
-            Vector3 destination = transform.position + (lineToPlayer.normalized * -runningAwayDistance);
-            agent.SetDestination(destination);
+            FleeToFarthestCorner();
         }
 
-        if (aggressionLevel < 3)
+
+        float duration = 0;
+        if (aggressionLevel == Aggression.Passive) 
         {
             return;
         }
+        else if (aggressionLevel == Aggression.Low)
+        {
+            duration = runAwayBaseDuration;
+        }
+        else if (aggressionLevel == Aggression.High)
+        {
+            duration = runAwayBaseDuration * 0.7f;
+        }
+        else if (aggressionLevel == Aggression.Max)
+        {
+            duration = runAwayBaseDuration * 0.5f;
+        }
+        duration += durationRandomizer;
 
-        if (timeSinceLastState() >= runAwayDurration)
+        if (timeSinceLastState() >= duration)
             switchState(State.NonAggressiveStalking);
     }
 
@@ -179,42 +210,17 @@ public class GhostAI : MonoBehaviour
     {
         if (JustEnteredState())
         {
-            durationRandomizer = Random.Range(0, 1.25f);
             changeSpeed(slowStalkSpeed);
         }
-
 
         if (isPathfindTime())
         {
-            agent.SetDestination(getTrail(NonAggressiveStalkDistance));
+            changeSpeed(distanceFromPlayer() > nonAggresiveAttackDistance * 2f ? fastStalkSpeed : slowStalkSpeed);
+            agent.SetDestination(getTrail(nonAggressiveFollowGap));
         }
 
-        if (distanceFromPlayer() <= NonAggressiveStalkDistance)
-        {
-            changeSpeed(0);
-        }
-        else
-        {
-            changeSpeed(slowStalkSpeed);
-        }
-
-        float duration;
-        if (aggressionLevel <= 5)
-        {
-            duration = NonAggressiveStalkingBaseDuration;
-        }
-        else if (aggressionLevel <= 10)
-        {
-            duration = NonAggressiveStalkingBaseDuration * 0.7f;
-        }
-        else
-        {
-            duration = NonAggressiveStalkingBaseDuration * 0.5f;
-        }
-        duration += durationRandomizer;
-
-        bool tooClose = distanceFromPlayer() <= NonAggressiveStalkDistance * 0.5f;
-        if (timeSinceLastState() >= duration || tooClose)
+        bool nonAggressiveForTooLong = timeSinceLastState() >= maxNonAggresiveTime;
+        if (distanceFromPlayer() <= nonAggresiveAttackDistance * 1.2f || nonAggressiveForTooLong)
             switchState(State.AggresiveStalking);
     }
 
@@ -288,6 +294,46 @@ public class GhostAI : MonoBehaviour
         int back = Mathf.RoundToInt(gap / playerTrailGap);
         int trail = Mathf.Max(0, playerTrail.Count - 1 - back);
         return playerTrail[trail];
+    }
+
+    private void scaleAggression() {
+        float dotsPct = GameManager.Instance.DotsCollectedPercentage();
+        if (dotsPct >= 0.9) {
+            setAggression(Aggression.Max);
+        } else if (dotsPct >= 0.5) {
+            setAggression(Aggression.High);
+        } else if (dotsPct >= 0.07) {
+            setAggression(Aggression.Low);
+        } else {
+            setAggression(Aggression.Passive);
+        }
+    }
+
+    private static readonly Vector3[] corners = {
+        new Vector3(2.5f,  0, 2.5f),
+        new Vector3(2.5f,  0, 62.5f),
+        new Vector3(62.5f, 0, 2.5f),
+        new Vector3(62.5f, 0, 62.5f),
+    };
+
+    private void FleeToFarthestCorner() {
+        Vector3 best = corners[0];
+        float bestDist = -10000000f;
+        foreach (Vector3 corner in corners) {
+            float playerDistance = Vector3.Distance(corner, playerTransform.position);
+            float ghostDistance = Vector3.Distance(corner, transform.position);
+            playerDistance = (ghostDistance > playerDistance) ? 
+                playerDistance - 1000 :
+                playerDistance;
+
+            if (playerDistance > bestDist) {
+                bestDist = playerDistance;
+                best = corner;
+            }
+        }
+
+        if (NavMesh.SamplePosition(best, out NavMeshHit hit, 3f, NavMesh.AllAreas))
+            agent.SetDestination(hit.position);
     }
 
     //HELPERS

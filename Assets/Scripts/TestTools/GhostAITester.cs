@@ -15,9 +15,9 @@ public class GhostAITester : MonoBehaviour
     void Update()
     {
         if (Mouse.current.rightButton.wasPressedThisFrame) {
-            ghost.increaseAgression();
+            ghost.increaseAggression();
         } else if (Mouse.current.leftButton.wasPressedThisFrame) {
-            ghost.Startle();
+            // ghost.Startle();
         }
     }
 }
