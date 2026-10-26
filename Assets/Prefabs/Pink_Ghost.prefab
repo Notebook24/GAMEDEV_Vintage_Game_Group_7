@@ -196,7 +196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2472783d49c26345b089c2a5d74b289, type: 2}
+  - {fileID: 2100000, guid: 3f65f98d911486d49936bc178ac15d01, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -286,7 +286,7 @@ Light:
   m_Enabled: 0
   serializedVersion: 13
   m_Type: 2
-  m_Color: {r: 0.8773585, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.4117647, b: 0.7058824, a: 1}
   m_Intensity: 100
   m_Range: 8
   m_SpotAngle: 30
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 5515976341320973938}
   - component: {fileID: 7021225429775698092}
   m_Layer: 0
-  m_Name: Green
+  m_Name: Pink_Ghost
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

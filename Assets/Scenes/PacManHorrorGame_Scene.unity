@@ -442,8 +442,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
   wallPrefab: {fileID: 1884769898366789506, guid: 62dd403bfc7f60248a11a6afe45dd79a, type: 3}
   dotPrefab: {fileID: 5163655411732602011, guid: fbb0df3f8e99ab049b9a42970b56f742, type: 3}
-  redGhostPrefab: {fileID: 6654233035178424688, guid: 938b08dfe988c4371895f41baaad017b, type: 3}
-  greenGhostPrefab: {fileID: 6654233035178424688, guid: ddc8a620d18b149d5b6d59952043ea66, type: 3}
+  ghost1Prefab: {fileID: 6654233035178424688, guid: 938b08dfe988c4371895f41baaad017b, type: 3}
+  ghost2Prefab: {fileID: 6654233035178424688, guid: ddc8a620d18b149d5b6d59952043ea66, type: 3}
   playerPrefab: {fileID: 3049432683389291443, guid: 7f02ceb1e67271046b5d0cc437c1c646, type: 3}
   tileSize: 2.5
 --- !u!114 &1054959369

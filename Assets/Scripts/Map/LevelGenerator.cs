@@ -7,8 +7,8 @@ public class LevelGenerator : MonoBehaviour
     // prefabs
     public GameObject wallPrefab;
     public GameObject dotPrefab;
-    public GameObject redGhostPrefab;
-    public GameObject greenGhostPrefab;
+    public GameObject ghost1Prefab;
+    public GameObject ghost2Prefab;
     public GameObject playerPrefab;
 
     public float tileSize = 2.5f;
@@ -97,14 +97,14 @@ public class LevelGenerator : MonoBehaviour
                         // spawnedObj.transform.localScale = new Vector3(1.0f, 0.75f, 1.0f);
                         break;
 
-                    case 4: // Red
-                        spawnedObj = Instantiate(redGhostPrefab, basePos, Quaternion.identity);
+                    case 4: // ghost 1
+                        spawnedObj = Instantiate(ghost1Prefab, basePos, Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
 
-                    case 5: // green
-                        spawnedObj = Instantiate(greenGhostPrefab, basePos + new Vector3(0, 1.25f, 0), Quaternion.identity);
+                    case 5: // ghost 2
+                        spawnedObj = Instantiate(ghost2Prefab, basePos, Quaternion.identity);
                         // Unity cylinders are 2m default. Scaling Y by 1.2 makes it 2.4m tall
                         // spawnedObj.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
                         break;
