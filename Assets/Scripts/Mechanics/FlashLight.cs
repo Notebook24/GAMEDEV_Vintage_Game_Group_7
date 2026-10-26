@@ -1,0 +1,109 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using System.Collections;
+
+public class FlashLight : MonoBehaviour
+{
+    [SerializeField]
+    private Transform ghost;
+    [SerializeField]
+    private float flashDistance = 30;
+    [SerializeField]
+    private float flashDuration = 0.05f;
+    [SerializeField]
+    private float flashFade = 2f;
+    [SerializeField]
+    private float flashIntensity = 100;
+    [SerializeField]
+    private float flashDrainBatteryAmount = 10f; //HOW MUCH EACH FLASH DRAINS BATTERY
+
+    private Light light;
+    private Camera camera;
+    private float FOV = 90;
+    private float flashBattery = 100f;
+    private AudioSource flashAudio;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        GameObject ghostObj = GameObject.FindWithTag("Ghost");
+        if (ghostObj != null)
+        {
+            ghost = ghostObj.transform;
+        }
+
+        camera = GetComponentInChildren<Camera>();
+        if (camera == null) {
+            Debug.LogError("put dis in camera");
+            return;
+        }
+        FOV = camera.fieldOfView;
+
+        light = GetComponentInChildren<Light>();
+        if (light == null) {
+            Debug.LogError("NEED LIGHT COMPONENT IN CAMERA");
+            return;
+        }
+
+        flashAudio = GetComponent<AudioSource>();
+
+        light.intensity = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+        if (flashBattery <= 0) {
+            Debug.Log("OUT OF BATTERY!");
+            return;
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(flashLight());
+        detectMonster();
+        flashBattery -= flashDrainBatteryAmount;
+        flashAudio.PlayOneShot(flashAudio.clip);
+        Debug.Log("FLASHLIGHT BATTERY: " + flashBattery);
+    }
+
+
+    private void detectMonster() {
+        Vector3 ghostPos =  new Vector3(ghost.position.x, 1, ghost.position.z);
+
+        if (Vector3.Distance(ghostPos, transform.position) > flashDistance)
+            return;
+
+        Vector3 lineToMonster = ghostPos - transform.position;
+        if (Vector3.Angle(transform.forward, lineToMonster) > FOV / 2) return;
+
+        RaycastHit hit;
+        LayerMask layer = LayerMask.GetMask("Default");
+
+        if (Physics.Raycast(transform.position, lineToMonster.normalized, out hit, flashDistance, layer)) {
+            Debug.DrawLine(transform.position, hit.point, Color.red, 2.0f);
+            GhostAI ghostAI = hit.collider.transform.root.GetComponent<GhostAI>();
+            if (ghostAI == null) return;
+            
+
+            Debug.Log("GHOST DETECTED");
+            ghostAI.Startle();
+        }
+    }
+
+    private IEnumerator flashLight() {
+        light.intensity = flashIntensity;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        float elapsed = 0;
+        while (elapsed < flashFade) {
+            elapsed += Time.deltaTime;
+            light.intensity = Mathf.Lerp(flashIntensity, 0, elapsed / flashDuration);
+            yield return null;
+        }
+
+
+        light.intensity = 0;
+    }
+}
