@@ -18,6 +18,7 @@ public class Collectible : MonoBehaviour
             sound.Play();
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
+            other.GetComponentInChildren<FlashLight>().IncreaseBattery(0.5f);
             Destroy(gameObject, 0.5f);
             if (GameManager.Instance != null)
             {

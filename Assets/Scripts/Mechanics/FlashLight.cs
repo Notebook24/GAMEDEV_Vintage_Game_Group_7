@@ -125,4 +125,8 @@ public class FlashLight : MonoBehaviour
 
         light.intensity = 0;
     }
+
+    public void IncreaseBattery(float amount) {
+        flashBattery = Mathf.Min(flashBattery + amount, 100f);
+    }
 }
