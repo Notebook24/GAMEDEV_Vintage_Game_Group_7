@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class GameManager: MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     public static GameManager Instance { get; private set; }
 
     [Header("Game State")]
@@ -11,24 +12,29 @@ public class GameManager: MonoBehaviour {
     public bool isGameActive = true;
 
     // Singleton pattern to ensure only one instance of GameManager exists
-    private void Awake() {
-        if (Instance == null) {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         // Initialize game state
-        // totalDots = <to be inserted>
-        isGameActive = true;
+        totalDots = GameObject.FindGameObjectsWithTag("Dot").Length; isGameActive = true;
 
         UIManager.Instance.UpdateScore(currentScore);
     }
 
-    public void AddScore(int pts) {
+    public void AddScore(int pts)
+    {
         // Add score to the player's total score
         if (!isGameActive)
             return;
@@ -40,12 +46,14 @@ public class GameManager: MonoBehaviour {
         UIManager.Instance.UpdateScore(currentScore);
 
         // Check for win condition which is when dots are all collected
-        if (dotsCollected >= totalDots) {
+        if (dotsCollected >= totalDots)
+        {
             GameOver();
         }
     }
 
-    public void GameOver() {
+    public void GameOver()
+    {
         // Handle game over logic
         if (!isGameActive)
             return;
@@ -54,10 +62,11 @@ public class GameManager: MonoBehaviour {
         //Show UI for game over
         UIManager.Instance.ShowEndScreenUI(false);
         //Stop the gameplay
-        //to be inserted
+        Time.timeScale = 0f;
     }
 
-    public void GameWon() {
+    public void GameWon()
+    {
         // Handle game won logic
         if (!isGameActive)
             return;
@@ -66,6 +75,6 @@ public class GameManager: MonoBehaviour {
         //Show UI for winning the game
         UIManager.Instance.ShowEndScreenUI(true);
         //Stop the gameplay
-        //to be inserted
+        Time.timeScale = 0f;
     }
 }
