@@ -11,7 +11,7 @@
 | Joramm Dela Torre | SWE 1: Core State & Architecture (GameManager, UI) |
 | Alain Zuriel Marcos | SWE 2: Player Controller & Survival Mechanics |
 | Nykko Vanguardia | SWE 3: AI Logic (Ghosts) & Camera Flash |
-| Kei Saguin | SWE 4: Level Engineering & Interactions (Maze, Lighting, Dots) |
+| VL "Kei" Saguin | SWE 4: Level Engineering & Interactions (Maze, Lighting, Dots) |
 
 ## Description
 
