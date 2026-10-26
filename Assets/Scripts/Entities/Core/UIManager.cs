@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour {
             endGamePanel.SetActive(false); // Hide end game panel at the start
         }
         if (jumpscareImage != null) {
-                    jumpscareImage.SetActive(false);
+            jumpscareImage.SetActive(false);
         }
     }
 
