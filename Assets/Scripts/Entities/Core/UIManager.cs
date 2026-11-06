@@ -121,6 +121,8 @@ public class UIManager : MonoBehaviour
     public void CloseHowToPlay()
     {
         if (howToPlayPanel != null) howToPlayPanel.SetActive(false);
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
+
     }
 
     public void RestartGame()
