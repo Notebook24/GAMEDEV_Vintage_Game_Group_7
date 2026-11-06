@@ -2,10 +2,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+
+    [Header("Main Menu Elements")]
+    public GameObject mainMenuPanel;
+    public GameObject howToPlayPanel;
 
     [Header("HUD Elements")]
     public TextMeshProUGUI scoreText; // Reference to the UI Text element for displaying score
@@ -65,6 +70,63 @@ public class UIManager : MonoBehaviour
         {
             jumpscareImage.SetActive(false);
         }
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.SetActive(true);
+        }
+        if (howToPlayPanel != null)
+        {
+            howToPlayPanel.SetActive(false);
+        }
+
+        if (scoreText != null) scoreText.gameObject.SetActive(false);
+        if (staminaBar != null) staminaBar.gameObject.SetActive(false);
+        if (flashlightBar != null) flashlightBar.gameObject.SetActive(false);
+        if (aggressionText != null) aggressionText.gameObject.SetActive(false);
+
+        Time.timeScale = 0f;
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.isGameActive = false;
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void StartGame()
+    {
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
+
+        if (scoreText != null) scoreText.gameObject.SetActive(true);
+        if (staminaBar != null) staminaBar.gameObject.SetActive(true);
+        if (flashlightBar != null) flashlightBar.gameObject.SetActive(true);
+        if (aggressionText != null) aggressionText.gameObject.SetActive(true);
+        Time.timeScale = 1f; // Unpause the game
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.isGameActive = true;
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void OpenHowToPlay()
+    {
+        if (howToPlayPanel != null) howToPlayPanel.SetActive(true);
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
+
+    }
+
+    public void CloseHowToPlay()
+    {
+        if (howToPlayPanel != null) howToPlayPanel.SetActive(false);
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f; // Ensure time is flowing before reloading
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void UpdateScore(int score)
@@ -89,6 +151,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowEndScreenUI(bool status)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         // hide all UI
         if (scoreText != null) scoreText.gameObject.SetActive(false);
         if (staminaBar != null) staminaBar.gameObject.SetActive(false);
