@@ -38,8 +38,8 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         cameraTransform = GetComponentInChildren<Camera>().transform; // no Inspector slot needed
         CurrentStamina = MaxStamina;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
     }
 
     void Update()
