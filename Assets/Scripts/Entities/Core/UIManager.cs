@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
         if (aggressionText != null) aggressionText.gameObject.SetActive(false);
 
         Time.timeScale = 0f;
-        if(GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
             GameManager.Instance.isGameActive = false;
         }
@@ -174,6 +174,8 @@ public class UIManager : MonoBehaviour
             // Hide visual renderers & disable AI
             ghost.SetActive(false);
         }
+
+        Time.timeScale = 0f;
 
         if (finalScoreText != null && GameManager.Instance != null)
         {
