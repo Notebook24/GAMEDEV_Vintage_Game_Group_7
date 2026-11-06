@@ -63,6 +63,8 @@ public class FlashLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0f) return;
+        
         if (!Mouse.current.leftButton.wasPressedThisFrame) return;
         if (flashBattery <= 0)
         {

@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Look()
     {
+        if (Time.timeScale == 0f) return;
+        
         float mx = Input.GetAxis("Mouse X") * MouseSensitivity;
         float my = Input.GetAxis("Mouse Y") * MouseSensitivity;
 
