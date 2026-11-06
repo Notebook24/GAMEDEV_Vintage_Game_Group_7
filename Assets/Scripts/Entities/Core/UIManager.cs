@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
+    public static bool isRestarting = false; public static UIManager Instance { get; private set; }
 
     [Header("Main Menu Elements")]
     public GameObject mainMenuPanel;
@@ -48,15 +48,16 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
+        // if (Instance == null)
+        // {
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     private void Start()
@@ -83,15 +84,22 @@ public class UIManager : MonoBehaviour
         if (staminaBar != null) staminaBar.gameObject.SetActive(false);
         if (flashlightBar != null) flashlightBar.gameObject.SetActive(false);
         if (aggressionText != null) aggressionText.gameObject.SetActive(false);
-
-        Time.timeScale = 0f;
-        if (GameManager.Instance != null)
+        if (isRestarting)
         {
-            GameManager.Instance.isGameActive = false;
+            if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
+            StartGame(); // Instantly build the map and start
         }
+        else
+        {
+            Time.timeScale = 0f;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.isGameActive = false;
+            }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void StartGame()
@@ -127,6 +135,7 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
+        isRestarting = true;
         Time.timeScale = 1f; // Ensure time is flowing before reloading
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
